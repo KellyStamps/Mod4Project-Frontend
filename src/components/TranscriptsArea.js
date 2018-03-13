@@ -30,7 +30,9 @@ class TranscriptsArea extends React.Component {
   }
 
   handleReceivedTranscript = (response) => {
-    this.setState({ transcripts: [...this.state.transcripts, response], allUsers: [...this.state.allUsers, response.user] })
+    console.log(this.state)
+    this.setState({ transcripts: [...this.state.transcripts, response], allUsers: [...this.state.allUsers, response.user_id] })
+    console.log(this.state)
   }
 
   handleDeleteChat = () => {
@@ -50,6 +52,7 @@ class TranscriptsArea extends React.Component {
     let chosenTrans = this.state.transcripts.filter(transcript => transcript.chat_session_id == this.state.currentChat.id)
     return chosenTrans.map(tran => {
       let user = this.state.allUsers.find( user => user.id === tran.user_id)
+
       user ? null : user = this.state.user
       const time = new Date(tran.created_at).toLocaleTimeString('en-US')
       return <tr className="transcript-row" key={tran.id}><td>{time}</td><td className="name">{user.username}:</td><td className="content"> {tran.content}</td></tr>
